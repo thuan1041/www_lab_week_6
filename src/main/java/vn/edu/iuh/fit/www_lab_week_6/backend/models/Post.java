@@ -1,24 +1,43 @@
 package vn.edu.iuh.fit.www_lab_week_6.backend.models;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.time.Instant;
 import java.util.Set;
 
+@Getter
 @Entity
+@Table(name = "post")
 public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
+    @Column(name= "published", columnDefinition = "bit(1)")
     private Boolean published;
+    @Column(name = "content", columnDefinition = "tinytext")
     private String content;
+    @ManyToOne()
+    @JoinColumn(name = "parent_id")
     private Post parent;
+    @Column(name = "mata_title", columnDefinition = "varchar(100)")
     private String metaTitle;
+    @Column(name = "summary", columnDefinition = "tinytext")
     private String summary;
+    @Column(columnDefinition = "datetime")
     private Instant createAt;
-    private Set<Post> posts;
+    @Column(columnDefinition = "datetime")
     private String title;
-    private User author;
+    @Column(columnDefinition = "datetime")
     private Instant updatedAt;
+    @Column(columnDefinition = "datetime")
     private Instant publishedAt;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
+    @OneToMany(mappedBy = "parent")
+    private Set<Post> posts;
 
     public Post() {
     }
@@ -38,96 +57,48 @@ public class Post {
         this.publishedAt = publishedAt;
     }
 
-    public long getId() {
-        return id;
-    }
-
     public void setId(long id) {
         this.id = id;
-    }
-
-    public Boolean getPublished() {
-        return published;
     }
 
     public void setPublished(Boolean published) {
         this.published = published;
     }
 
-    public String getContent() {
-        return content;
-    }
-
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public Post getParent() {
-        return parent;
     }
 
     public void setParent(Post parent) {
         this.parent = parent;
     }
 
-    public String getMetaTitle() {
-        return metaTitle;
-    }
-
     public void setMetaTitle(String metaTitle) {
         this.metaTitle = metaTitle;
-    }
-
-    public String getSummary() {
-        return summary;
     }
 
     public void setSummary(String summary) {
         this.summary = summary;
     }
 
-    public Instant getCreateAt() {
-        return createAt;
-    }
-
     public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
-    }
-
-    public Set<Post> getPosts() {
-        return posts;
     }
 
     public void setPosts(Set<Post> posts) {
         this.posts = posts;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public User getAuthor() {
-        return author;
     }
 
     public void setAuthor(User author) {
         this.author = author;
     }
 
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Instant getPublishedAt() {
-        return publishedAt;
     }
 
     public void setPublishedAt(Instant publishedAt) {

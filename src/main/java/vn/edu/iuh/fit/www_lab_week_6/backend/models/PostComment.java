@@ -1,18 +1,38 @@
 package vn.edu.iuh.fit.www_lab_week_6.backend.models;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+
 import java.time.Instant;
 import java.util.Set;
 
+@Getter
+@Entity
+@Table(name = "post_comment")
 public class PostComment {
-    private Post post ;
-    private String title;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Set<PostComment> postComments;
+    @Column(columnDefinition = "varchar(100)")
+    private String title;
+    @Column(columnDefinition = "tinyint(1)")
     private Boolean published;
+    @Column(columnDefinition = "text")
     private String content;
+    @Column(columnDefinition = "datetime")
     private Instant publishedAt;
+    @Column(columnDefinition = "datetime")
     private Instant createAt;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post ;
+    @OneToMany(mappedBy = "parent")
+    private Set<PostComment> postComments;
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
     private PostComment parent;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     public PostComment() {
@@ -31,80 +51,40 @@ public class PostComment {
         this.user = user;
     }
 
-    public Post getPost() {
-        return post;
-    }
-
     public void setPost(Post post) {
         this.post = post;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Set<PostComment> getPostComments() {
-        return postComments;
     }
 
     public void setPostComments(Set<PostComment> postComments) {
         this.postComments = postComments;
     }
 
-    public Boolean getPublished() {
-        return published;
-    }
-
     public void setPublished(Boolean published) {
         this.published = published;
-    }
-
-    public String getContent() {
-        return content;
     }
 
     public void setContent(String content) {
         this.content = content;
     }
 
-    public Instant getPublishedAt() {
-        return publishedAt;
-    }
-
     public void setPublishedAt(Instant publishedAt) {
         this.publishedAt = publishedAt;
-    }
-
-    public Instant getCreateAt() {
-        return createAt;
     }
 
     public void setCreateAt(Instant createAt) {
         this.createAt = createAt;
     }
 
-    public PostComment getParent() {
-        return parent;
-    }
-
     public void setParent(PostComment parent) {
         this.parent = parent;
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public void setUser(User user) {

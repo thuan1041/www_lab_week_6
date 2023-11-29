@@ -1,29 +1,41 @@
 package vn.edu.iuh.fit.www_lab_week_6.backend.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.time.Instant;
 import java.util.Set;
+@Getter
 @Entity
 @Table(name = "user")
 public class User {
-    @Column(name ="mobile", length = 15)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", columnDefinition = "bigint(20)")
+    private long id;
+    @Column(name ="mobile", columnDefinition = "varchar(15)")
     private String mobile;
     @Column(name ="lastLogin")
     private Instant lastLogin;
+    @Column(name = "last_name", columnDefinition = "varchar(50)")
     private String lastName;
+    @Column(columnDefinition = "tinytext")
     private String intro;
+    @Column(columnDefinition = "text")
     private String profile;
+    @Column(name = "registerd_at",columnDefinition = "varchar(32)")
     private Instant registerdAt;
-    private Set<PostComment> comments;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private long id;
-    private String middleName;
-    private Set<Post> posts;
+    @Column(name = "first_name", columnDefinition = "varchar(50)")
     private String firstName;
+    @Column(name = "middle_name", columnDefinition = "varchar(50)")
+    private String middleName;
+    @Column(columnDefinition = "varchar(50)")
     private String email;
+    @OneToMany(mappedBy = "user")
+    private Set<PostComment> comments;
+    @OneToMany(mappedBy = "author")
+    private Set<Post> posts;
+
 
     public User() {
     }
@@ -43,96 +55,48 @@ public class User {
         this.email = email;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
-
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public Instant getLastLogin() {
-        return lastLogin;
     }
 
     public void setLastLogin(Instant lastLogin) {
         this.lastLogin = lastLogin;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getIntro() {
-        return intro;
     }
 
     public void setIntro(String intro) {
         this.intro = intro;
     }
 
-    public String getProfile() {
-        return profile;
-    }
-
     public void setProfile(String profile) {
         this.profile = profile;
-    }
-
-    public Instant getRegisterdAt() {
-        return registerdAt;
     }
 
     public void setRegisterdAt(Instant registerdAt) {
         this.registerdAt = registerdAt;
     }
 
-    public Set<PostComment> getComments() {
-        return comments;
-    }
-
     public void setComments(Set<PostComment> comments) {
         this.comments = comments;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public String getMiddleName() {
-        return middleName;
-    }
-
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
-    }
-
-    public Set<Post> getPosts() {
-        return posts;
     }
 
     public void setPosts(Set<Post> posts) {
         this.posts = posts;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public void setEmail(String email) {
